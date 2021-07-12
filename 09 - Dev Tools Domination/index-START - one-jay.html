@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Console Tricks!</title>
+</head>
+<body>
+
+  <p onClick="makeGreen()">×BREAK×DOWN×</p>
+
+  <script>
+    const p = document.querySelector('p');
+
+    const dogs = [{ name: 'Snickers', age: 2 }, { name: 'hugo', age: 8 }];
+
+    function makeGreen() {
+      // const p = document.querySelector('p');
+      p.style.color = '#BADA55';
+      p.style.fontSize = '50px';
+    }
+
+    // Regular
+    console.log("哈囉你好嗎");
+
+    // Interpolated
+    // %s印出參數字串，若傳入json及data格式則僅印出格式
+    console.log("祝%s生日快樂",'哈利');
+    var a = 1;
+    var b = 2;
+    var data = { c: 3, d: 4, };
+    var arr = [1, 2, 3, ];
+
+    console.log('a =', a, ', b =', b);
+    // a = 1 , b = 2
+
+    console.log('a = %s, b = %s', a, b);
+    // a = 1, b = 2
+
+    // %s with JSON
+    console.log('data = %s', data); 
+    // data = Object
+
+    // %s with Array
+    console.log('arr = %s', arr);
+    // arr = Array(3)
+
+
+    // Styled
+    // %c 加上css style
+    console.log("%c祝%s生日快樂",'background-color:purple;color:yellow;text-shadow:1px 1px 1px blue;font-weight:bold','哈利');
+
+    // warning!
+    // console.warn('')給警告符號出來
+    console.warn('OH NOOO');
+
+    // Error :|
+    // console.error('')給紅色錯誤出來
+    console.error('OH NOOO');
+    // Info
+    // console.info('')給出資訊圖標  *試不出來
+    console.info('OH NOOO');
+
+    // Testing
+    // console.assert('')當判斷視為錯時才給出資訊
+    console.assert(1===2, 'Oh No~'); 
+    console.assert(2===2, 'Oh Yes！'); 
+
+    // clearing
+    // console.clear('')清除console
+    // console.clear('');
+
+    // Viewing DOM Elements
+    // console.dir('')，給出dom元素
+    // console.dir 跟 console.log 最大的差別在於， 
+    // console.dir 主要適用於顯示物件，會顯示物件中詳細的每個屬性及 prototype 的資訊。
+    // 對 DOM 的操作，console.log 針對 DOM 是印出該元素，而 console.dir 則是完整的顯示出該物件的所有的資訊。
+    // console.log(p);
+    console.dir(p);
+
+    // Grouping together
+    // console.group('') ,console.groupEnd('')，以一整組方式輸出你的console.log，
+    // 由console.group()跟console.groupEnd()包起來
+    dogs.forEach(dog => {
+      console.group(dog.name)
+      console.log('My name is '+ dog.name);
+      console.log(dog.name +' is '+ dog.age +' years old');
+      console.log(dog.name +' is '+ dog.age*7 +' dog years old');
+      console.groupEnd(dog.name)
+    })
+    console.table(dogs);
+    
+    // counting
+    // console.count('')數你console了幾次
+    console.count('dog'); 
+    console.count('cat');
+    console.count('dog');
+    console.count('CAT');
+    console.count('dog');
+    console.count('cat');
+
+
+    // timing
+    // consol.time 啟動一組計時器，再timeEnd時他會跟你說過了多久
+    console.time('fetching data');
+    fetch('https://api.github.com/users/wesbos')
+      .then(data => data.json())
+      .then(data => {
+        console.timeEnd('fetching data');
+        console.log(data);
+    });
+
+
+
+
+
+
+// 全域、區域污染
+// #1 屬性可以被刪除
+a = 0;
+delete window.a
+// console.log(a);
+console.log(window); // 全域物件
+
+// #2 變數無法被刪除
+var b = 1;
+delete window.b
+console.log(window); // b 不存在 0, 存在  1
+console.log(b);
+
+
+  </script>
+</body>
+</html>
