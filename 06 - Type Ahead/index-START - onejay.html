@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Type Ahead 👀</title>
+  <link rel="stylesheet" href="style.css">
+  
+</head>
+<body>
+
+  <form class="search-form">
+    <input id='input' type="text" class="search" placeholder="City or State">
+    <ul class="suggestions">
+      <li>Filter for a city</li>
+      <li>or a state</li>
+    </ul>
+  </form>
+<script>
+
+const endpoint = 'https://gist.githubusercontent.com/Miserlou/c5cd8364bf9b2420bb29/raw/2bf258763cdddd704f8ffd3ea9a3e81d25e2c6f6/cities.json';
+let cities = [];
+
+// let data = fetch(endpoint)
+//           .then(a=>a.json())
+//           .then(dataElement=>cities.push(...dataElement));
+
+          (async ()=> {
+            try {const alldata = await fetch(endpoint);
+              // console.log(alldata);
+              const json = await alldata.json();
+              // await cities.push(...json);
+              cities = json;
+            }
+            catch (err){
+              console.log("catch",err);
+            };
+          })();
+
+          // 接收 input內資料，並 match 
+          // 將input加上 input事件，使其在輸入變化時，就會更新
+          input.addEventListener('input',function (){
+            let search = input.value;
+            var anses = findMatches(search,cities);
+            view(anses);
+          })
+
+          function findMatches(wordToMatch, cities) {
+            return cities.filter(place => {
+              const regex = new RegExp(wordToMatch, 'gi');
+              //有符合的話回傳資料的 city屬性的值跟 state屬性的值
+              return place.city.match(regex) || place.state.match(regex);
+            });
+          }
+          
+
+          let selectors = document.querySelector('.suggestions');
+          function view(anses) {
+            selectors.innerHTML='';
+            const finded = anses.map(x=>{ 
+              const matchWordRegex = new RegExp(input.value, 'gi');
+              // 核對使用者輸入文字
+              let cityReplace = x.city.replace(matchWordRegex,'<span class="hl">'+input.value+'</span>');
+              let stateReplace = x.state.replace(matchWordRegex,'<span class="hl">'+input.value+'</span>');
+              return `<li><div>${cityReplace},${stateReplace}</div><div class='population'>${Number(x.population).toLocaleString()}</div></li>`
+            }).join('');
+
+            selectors.innerHTML = finded;
+          };
+</script>
+</body>
+</html>
