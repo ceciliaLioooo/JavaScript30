@@ -15,7 +15,6 @@ playBtn.addEventListener('click',function(){
       playBtn.textContent = video.paused ? '►' : '❚ ❚';
 
       autoProgress();
-      skip();
 })
 
 // Progress Bar
@@ -39,12 +38,11 @@ function changeProgress(e) {
 
 // skip
 function skip() {
-      skips.forEach(s=>{
-            s.addEventListener('click',()=>{
-                  video.currentTime += Number(s.dataset.skip);
-            })
-      });
+      video.currentTime += Number(this.dataset.skip);
 }
+
+skips.forEach(s=>s.addEventListener('click',skip));
+
 
 // sliders
 let volume = video.volume;
