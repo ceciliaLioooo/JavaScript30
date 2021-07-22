@@ -72,24 +72,23 @@
             //法2:[...allDataHalf]                       let b = [...allDataHalf];
             const allData = Array.from(allDataHalf);
             const allAudio = [...allAudioHalf];
-            console.log(allDataHalf);
 
             window.addEventListener("keydown", function (e) {
-                console.log(e.keyCode);
 
                 //allData[i] =element
-                //forEach不能return，returng是在函式中使用
+                //forEach不能return，return是在函式中使用
                 //e.keyCode可使用解構= {keyCode} 同時呼叫e中的keyCode，和宣告他
+
+                // 回傳data-key
                 let theKey = allData.find(element => 
-                    element.dataset.key == e.keyCode
-                );
-                // console.log(theKey);
+                    Number(element.dataset.key) === e.keyCode 
+                    );
+
                 theKey.classList.add("playing");
-                console.log(theKey);
 
                 //播放聲音
                 let theVoice = allAudio.find((element) => {
-                    return element.dataset.key == e.keyCode;
+                    return Number(element.dataset.key) === e.keyCode;
                 });
                 console.log(theVoice);
                 theVoice.currentTime = 0;

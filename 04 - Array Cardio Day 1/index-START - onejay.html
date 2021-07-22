@@ -10,7 +10,6 @@
             //用箭頭函式
 
             // ## Array Cardio Day 1
-            
 
             const inventors = [
                 { first: "Albert", last: "Einstein", year: 1879, passed: 1955 },
@@ -96,7 +95,7 @@
             // console.log(months);
 
             // 1. Filter the list of inventors for those who were born in the 1500's
-            //filter:利用條件篩選出原陣列中符合條件的物件
+            // filter:利用條件篩選出原陣列中符合條件的物件
             let born1500s = inventors.filter((value, index, arr) => {
                 return value.year < 1600 && value.year >= 1500;
             });
@@ -128,13 +127,20 @@
             //JSON.stringify() 將()內資料轉成字串  JSON.parase() 將()內資料轉回原本模樣
             //JSON.parase(JSON.stringify())
 
-            //深拷貝:法一:展開運算子
+            // const sorted = inventors.sort(function (a, b) {
+            //     if (a.year > b.year) {
+            //         return 1;
+            //     } else {
+            //         return -1;
+            //     }
+            // });
 
             // Array.prototype.reduce()
             // 4. How many years did all the inventors live all together?
             //法一
             let allYears = inventors.map((item, index, arr) => {
-                return item.passed - item.year;});
+                return item.passed - item.year;
+            });
             // let calc = allYears.reduce(function (accumulator, currentValue, currentIndex, array) {
             //     return accumulator + currentValue;});
             // console.log(calc);
